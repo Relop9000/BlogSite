@@ -1,0 +1,35 @@
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import parse from "html-react-parser";
+import Header from "@/components/Header";
+import Contact from "@/components/Contact";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function Page() {
+  const router = useRouter();
+
+  const { id } = router.query;
+  const url = `https://dev.to/api/articles/${id}`;
+
+  const { data: blogDetail = {}, isLoading, error } = useSWR(url, fetcher);
+  console.log(blogDetail);
+  if (isLoading) return <div>...Loading</div>;
+  if (error) return <div>...Error</div>;
+
+  const body_html = blogDetail?.body_html;
+
+  return (
+    <>
+      <div className="max-w-[1280px] mx-auto">
+        <Header />
+        <div className="max-w-[1024px] mx-auto mt-[100px]">
+          {parse(body_html)}
+        </div>
+      </div>
+      <div className="w-full h-[495px] bg-gray-100">
+        <Contact />
+      </div>
+    </>
+  );
+}

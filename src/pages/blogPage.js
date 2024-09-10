@@ -1,15 +1,12 @@
 import useSWR from "swr";
 import BlogPost from "../components/BlogPost";
-import BlogPostHeader from "../components/BlogPostHeader";
 import Header from "@/components/Header";
-import Contact from "../components/Contact";
-import Trending from "../components/Trending";
-import { Carousel } from "../components/Carousel";
+import Contact from "@/components/Contact";
 
 const url = "https://dev.to/api/articles";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const Home = () => {
+const Blog = () => {
   const { data, error, isLoading } = useSWR(url, fetcher);
   console.log(data);
 
@@ -33,9 +30,6 @@ const Home = () => {
     <>
       <div className="mx-auto max-w-[1280px] w-full">
         <Header />
-        <Carousel data={data} />
-        <Trending data={data} />
-        <BlogPostHeader data={data} />
         <BlogPost data={data} />
       </div>
       <div className="w-full h-[495px] bg-gray-100">
@@ -44,4 +38,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Blog;
