@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Contact from "../components/Contact";
 import Trending from "../components/Trending";
 import { Carousel } from "../components/Carousel";
+import { useContext } from "react";
+import { ThemeContext } from "@/components/ThemeContext";
 
 const url = "https://dev.to/api/articles";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -15,7 +17,7 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <p className="flex justify-center items-center text-7xl font-semibold text-blue-700">
+      <p className=" w-[450px] text-7xl font-semibold text-blue-700 mx-auto mt-[450px]">
         ...Loading
       </p>
     );
@@ -23,12 +25,14 @@ const Home = () => {
 
   if (error) {
     return (
-      <p className="flex justify-center items-center text-7xl font-semibold text-blue-700">
+      <p className="text-7xl font-semibold text-blue-700 mx-auto mt-[450px]">
         ...Uh Oh Error
       </p>
     );
   }
 
+  const light = useContext(ThemeContext);
+  console.log(light);
   return (
     <>
       <div className="mx-auto max-w-[1280px] w-full">
@@ -38,7 +42,7 @@ const Home = () => {
         <BlogPostHeader data={data} />
         <BlogPost data={data} />
       </div>
-      <div className="w-full h-[495px] bg-gray-100">
+      <div className="w-full h-[400px] bg-gray-100">
         <Contact />
       </div>
     </>

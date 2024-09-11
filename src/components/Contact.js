@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Contact() {
   return (
     <div className=" flex flex-col p-4 mt-[100px] max-w-[1280px] mx-auto">
-      <div className="flex justify-between mx-0">
+      <div className="flex justify-between mx-0 my-8">
         <div className="w-[289px] h-[236px] font-normal text-base">
           <h3 className="font-semibold text-lg">About</h3>
           <p>
@@ -26,7 +26,9 @@ export default function Contact() {
           <Link href="/blogPage">
             <p>Blog</p>
           </Link>
-          <p>Contact</p>
+          <Link href="/contact">
+            <p>Contact</p>
+          </Link>
         </div>
         <div className="flex justify-between w-[144px] mr-[190px]">
           <FaceBook />

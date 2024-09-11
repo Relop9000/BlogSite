@@ -15,7 +15,9 @@ const Header = () => {
         <Link href={`/blogPage`}>
           <p>Blog</p>
         </Link>
-        <p>Contact</p>
+        <Link href="/contact">
+          <p>Contact</p>
+        </Link>
       </div>
       <label className="input bg-[#F4F4F5] flex items-center gap-0 w[166px] h-[36px]">
         <input type="text" className="grow" placeholder="Search" />

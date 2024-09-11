@@ -8,7 +8,7 @@ export default function Trending(props) {
           return (
             <TrendingPost
               cover_image={trend.cover_image}
-              tags={trend.tag_list[0]}
+              tags={trend.tags}
               title={trend.title}
               index={index}
             />
@@ -19,7 +19,7 @@ export default function Trending(props) {
   );
 }
 const TrendingPost = (props) => {
-  const { cover_image, tag_list, title, index } = props;
+  const { cover_image, tags, title, index } = props;
   if (index < 4) {
     return (
       <div className="card bg-base-100 image-full w-[289px] h-[320px] shadow-xl">
@@ -28,7 +28,7 @@ const TrendingPost = (props) => {
         </figure>
         <div className="card-body w-[230px] h-[120px] self-end justify-between mx-auto p-0 m-2">
           <div className="card-actions p-4">
-            <p className="text-xs w-[66] h-5 text-white">{tag_list}</p>
+            <p className="text-xs w-[66] h-5 text-white">{tags}</p>
             <p className="text-lg text-white">{title}</p>
           </div>
         </div>

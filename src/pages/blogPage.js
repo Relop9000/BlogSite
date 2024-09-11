@@ -32,7 +32,7 @@ const Blog = () => {
         <Header />
         <BlogPost data={data} />
       </div>
-      <div className="w-full h-[495px] bg-gray-100">
+      <div className="w-full h-[400px] bg-gray-100">
         <Contact />
       </div>
     </>
