@@ -41,13 +41,16 @@ export default function ContactUs() {
           placeholder="Subject"
           className="w-[478px] h-[35px] border border-solid border-[#DCDDDF] rounded-[5px]"
         ></input>
-        <input
+        <textarea
           placeholder="Write a message"
           className="w-[478px] h-[134px] border border-solid border-[#DCDDDF] rounded-[5px]"
-        ></input>
-        <div className="w-[130px] h-10 rounded-md py-[10px] px-[16px] text-white text-sm mt-1 bg-[#4B6BFB]">
+        ></textarea>
+        <button
+          className="w-[130px] h-10 rounded-md py-[10px] px-[16px] text-white text-sm mt-1 bg-[#4B6BFB]"
+          type="submit"
+        >
           Send Message
-        </div>
+        </button>
       </div>
     </div>
   );

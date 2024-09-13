@@ -3,6 +3,8 @@ import useSWR from "swr";
 import parse from "html-react-parser";
 import Header from "@/components/Header";
 import Contact from "@/components/Contact";
+import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -18,13 +20,20 @@ export default function Page() {
   if (error) return <div>...Error</div>;
 
   const body_html = blogDetail?.body_html;
+  const bodyMarkdown = blogDetail.body_markdown;
 
   return (
     <>
       <div className="max-w-[1280px] mx-auto">
         <Header />
-        <div className="max-w-[1024px] mx-auto mt-[100px]">
-          {parse(body_html)}
+        <div className="mx-auto max-w-[1024px] my-[80px]">
+          <div className="text-2xl">{blogDetail.title}</div>
+          <div>{parse(body_html)}</div>
+          <div class="prose">
+            <Markdown rehypePlugins={[rehypeHighlight]}>
+              {bodyMarkdown}
+            </Markdown>
+          </div>
         </div>
       </div>
       <div className="w-full h-[495px] bg-gray-100">
