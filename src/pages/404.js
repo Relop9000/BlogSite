@@ -6,7 +6,6 @@ export default function custom404() {
   return (
     <>
       <div className="mx-auto max-w-[1280px] w-full">
-        <Header />
         <div className="flex items-center w-[642px] h-[208px] gap-10 mx-auto my-[150px]">
           <p className="text-7xl font-normal">404</p>
           <div className="border-l border-solid border-gray-200 h-[153px]"></div>

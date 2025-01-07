@@ -1,38 +1,41 @@
-export default function Trending(props) {
-  const { data } = props;
+import { useState } from "react";
+import TrendPosts from "./TrendPosts";
+import useSWR from "swr";
+
+const url = "https://dev.to/api/articles?state=rising";
+
+const Trending = () => {
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data: blogs, error, isLoading } = useSWR(url, fetcher);
+  const [currentTrendPost, setCurrentTrendPost] = useState(4);
+
+  if (isLoading) {
+    return <p>...Loading</p>;
+  }
+  if (error) {
+    return <p>ERROR</p>;
+  }
+
+  const currentPostCount = blogs.slice(0, currentTrendPost);
+
   return (
-    <div className="w-full mt-[100px]">
-      <h2 className="font-bold text-2xl">Trending</h2>
-      <div className="flex justify-between mt-8">
-        {data.map((trend, index) => {
+    <div className=" my-[50px] md:my-[100px]">
+      <h1 className="text-3xl font-bold pb-8">Trending</h1>
+      <div className="flex flex-col md:flex-row gap-5 h-[670px] overflow-hidden md:h-full">
+        {currentPostCount.map((blog, index) => {
           return (
-            <TrendingPost
-              cover_image={trend.cover_image}
-              tags={trend.tags}
-              title={trend.title}
-              index={index}
-            />
+            <div className="w-full md:w-1/4" key={blog.id}>
+              <TrendPosts
+                data={blog}
+                coverImage={blog.cover_image}
+                blogTags={blog.tag_list}
+                title={blog.title}
+              />
+            </div>
           );
         })}
       </div>
     </div>
   );
-}
-const TrendingPost = (props) => {
-  const { cover_image, tags, title, index } = props;
-  if (index < 4) {
-    return (
-      <div className="card bg-base-100 image-full w-[289px] h-[320px] shadow-xl">
-        <figure>
-          <img src={`${cover_image}`} alt={title} />
-        </figure>
-        <div className="card-body w-[230px] h-[120px] self-end justify-between mx-auto p-0 m-2">
-          <div className="card-actions p-4">
-            <p className="text-xs w-[66] h-5 text-white">{tags}</p>
-            <p className="text-lg text-white">{title}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 };
+export default Trending;

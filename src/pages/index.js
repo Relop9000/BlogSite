@@ -1,51 +1,47 @@
-import useSWR from "swr";
-import BlogPost from "../components/BlogPost";
-import BlogPostHeader from "../components/BlogPostHeader";
-import Header from "@/components/Header";
-import Contact from "../components/Contact";
-import Trending from "../components/Trending";
-import { Carousel } from "../components/Carousel";
-import { useContext } from "react";
-import { ThemeContext } from "@/components/ThemeContext";
+import AllBlogPosts from "@/components/AllBlogPost";
+import Hero from "@/components/Hero";
+import { DataContext } from "@/components/DataContext";
+import Trending from "@/components/Trending";
+import { useContext, useState } from "react";
 
-const url = "https://dev.to/api/articles";
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const MainBlogPage = () => {
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-const Home = () => {
-  const { data, error, isLoading } = useSWR(url, fetcher);
-  console.log(data);
+  const blogs = useContext(DataContext);
 
-  if (isLoading) {
-    return (
-      <p className=" w-[450px] text-7xl font-semibold text-blue-700 mx-auto mt-[450px]">
-        ...Loading
-      </p>
-    );
-  }
+  const onChangeSlideIndex = (index) => {
+    if (index === filteredBlog.length) {
+      setCurrentSlideIndex(0);
+    } else if (index < 0) {
+      setCurrentSlideIndex(filteredBlog.length - 1);
+    } else setCurrentSlideIndex(index);
+  };
+  const filteredBlog = [];
+  blogs.forEach((blog) => {
+    if (blog.cover_image !== null) filteredBlog.push(blog);
+    return false;
+  });
 
-  if (error) {
-    return (
-      <p className="text-7xl font-semibold text-blue-700 mx-auto mt-[450px]">
-        ...Uh Oh Error
-      </p>
-    );
-  }
+  const blog = filteredBlog[currentSlideIndex];
 
-  const light = useContext(ThemeContext);
-  console.log(light);
   return (
-    <>
-      <div className="mx-auto max-w-[1280px] w-full">
-        <Header />
-        <Carousel data={data} />
-        <Trending data={data} />
-        <BlogPostHeader data={data} />
-        <BlogPost data={data} />
+    <div className="max-w-[1280px] mx-auto ">
+      <div className="hidden md:block">
+        <Hero
+          id={blog.id}
+          coverImage={blog.cover_image}
+          tag={blog.tag_list[0]}
+          title={blog.title}
+          date={blog.published_at}
+          set={onChangeSlideIndex}
+          index={currentSlideIndex}
+          length={blogs.length}
+        />
       </div>
-      <div className="w-full h-[400px] bg-gray-100">
-        <Contact />
-      </div>
-    </>
+      <Trending />
+      <AllBlogPosts data={blogs} />
+    </div>
   );
 };
-export default Home;
+
+export default MainBlogPage;

@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
-import { ThemeContextProvider } from "../components/ThemeContext";
+import Layout from "@/components/Layout";
+import DataContextProvider from "@/components/DataContext";
 
 export default function App({ Component, pageProps }) {
   return (
-    <ThemeContextProvider>
-      <Component {...pageProps} />
-    </ThemeContextProvider>
+    <DataContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </DataContextProvider>
   );
 }
